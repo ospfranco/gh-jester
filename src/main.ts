@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import * as fs from 'fs'
 import { wrapWithSetStatus, createComment, GitHubContext } from './utils'
 import path from 'path';
 import { createChecksFromTestResults } from './test/checkRun';
@@ -28,8 +29,14 @@ async function run() {
 
     const [owner, repo] = context.repository.split('/');
 
+    const dir = fs.readdirSync(process.env.RUNNER_WORKSPACE as string)
+
+    core.info(`dir: ${dir}`)
+
     const pathToTestOutput = path.join(
       process.env.RUNNER_WORKSPACE as string,
+      owner,
+      repo,
       'test_results.json'
     );
 
