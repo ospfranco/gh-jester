@@ -1,9 +1,5 @@
 import { FormattedTestResults } from '@jest/test-result/build/types';
-import {
-  GitHubContext,
-  getCheckRunForAction,
-  updateCheckRun
-} from '../utils';
+import { GitHubContext, getCheckRunForAction, updateCheckRun } from '../utils';
 import { parseTests } from './parseTests';
 
 function chunkArray<T>(
@@ -63,15 +59,20 @@ export async function createChecksFromTestResults({
 
   const formattedTestResults = require(pathToTestOutput) as FormattedTestResults;
 
+  console.warn(`createChecksFromTestResults, marker1`);
   const checkRun = await getCheckRunForAction({
     context
   });
+  console.warn(`createChecksFromTestResults, marker2`);
 
   const testResults = parseTestOutput(formattedTestResults);
+  console.warn(`createChecksFromTestResults, marker3`);
 
   // GitHub only allows to send 50 checks at a time
   const chunkedTestResults = chunkArray(testResults, 50);
+  console.warn(`createChecksFromTestResults, marker4`);
   const testSummary = parseTests(formattedTestResults);
+  console.warn(`createChecksFromTestResults, marker5`);
 
   for (const chunk of chunkedTestResults) {
     const checks = {
@@ -92,12 +93,14 @@ export async function createChecksFromTestResults({
       })
     };
 
+    console.warn(`createChecksFromTestResults, marker6`);
     await updateCheckRun({
       context,
       checkRunId: checkRun.id,
       name: checkRun.name || 'NO_NAME',
       checks
     });
+    console.warn(`createChecksFromTestResults, marker7`);
   }
 
   return formattedTestResults;
