@@ -82,6 +82,7 @@ export async function wrapWithSetStatus<T>(
       description: `Failed: ${step}`,
       state: 'failure'
     });
+    core.info(`SOMETHING WENT WRONG ${error}`)
     core.info(`Setting status to failure`);
     core.setFailed(`CI failed at step: ${step}`);
   }
