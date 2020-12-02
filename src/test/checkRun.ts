@@ -42,7 +42,7 @@ function parseTestOutput(testResults: FormattedTestResults) {
             title: test.ancestorTitles.join(' > ') + ' > ' + test.title,
             failureMessages: (test.failureMessages || []).join('\n\n'),
             location: test.location,
-            path: suite.name
+            path: suite.name ?? 'NO_NAME'
           };
         });
       })
@@ -95,7 +95,7 @@ export async function createChecksFromTestResults({
     await updateCheckRun({
       context,
       checkRunId: checkRun.id,
-      name: checkRun.name,
+      name: checkRun.name || 'NO_NAME',
       checks
     });
   }

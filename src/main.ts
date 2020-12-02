@@ -45,18 +45,22 @@ async function run() {
     );
 
     const testSummary = await wrapWithSetStatus(context, 'test', async () => {
+      core.info('test summary marker 1')
       const testResults = await createChecksFromTestResults({
         pathToTestOutput,
         context
       });
-
+      core.info('test summary marker 2')
+      
       const formattedTestResults = require(pathToTestOutput) as FormattedTestResults;
       const testSummary = parseTests(formattedTestResults);
-
+      core.info('test summary marker 3')
+      
       if (testResults.numFailedTestSuites > 0) {
         core.setFailed('Tests failed. See details.');
       }
-
+      core.info('test summary marker 4')
+      
       return testSummary;
     });
 
