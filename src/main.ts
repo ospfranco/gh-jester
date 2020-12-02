@@ -29,13 +29,17 @@ async function run() {
 
     const [owner, repo] = context.repository.split('/');
 
-    const dir = fs.readdirSync(process.env.RUNNER_WORKSPACE as string)
+    const dir = fs.readdirSync(
+      path.join(
+        process.env.RUNNER_WORKSPACE as string,
+        repo
+      )
+    )
 
     core.info(`dir: ${dir}`)
 
     const pathToTestOutput = path.join(
       process.env.RUNNER_WORKSPACE as string,
-      owner,
       repo,
       'test_results.json'
     );
