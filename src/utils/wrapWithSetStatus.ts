@@ -73,6 +73,7 @@ export async function wrapWithSetStatus<T>(
       description: result.shortText,
       state: result.isOkay ? 'success' : 'failure'
     });
+    core.info('ROPO: HAPPY PATH')
     core.info(`Setting status to ${result.isOkay ? 'success' : 'failure'}`);
     return result;
   } catch (error) {
@@ -83,6 +84,7 @@ export async function wrapWithSetStatus<T>(
       state: 'failure'
     });
     core.info(`SOMETHING WENT WRONG ${error}`)
+    core.info(`STACK ${error.stack}`)
     core.info(`Setting status to failure`);
     core.setFailed(`CI failed at step: ${step}`);
   }
