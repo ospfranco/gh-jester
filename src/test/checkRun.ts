@@ -3,7 +3,7 @@ import {
   GitHubContext,
   getCheckRunForAction,
   updateCheckRun
-} from '@tangro/tangro-github-toolkit';
+} from '../utils';
 import { parseTests } from './parseTests';
 
 function chunkArray<T>(

@@ -1,5 +1,5 @@
 import { FormattedTestResults } from '@jest/test-result/build/types';
-import { Result } from '@tangro/tangro-github-toolkit';
+import { Result } from '../utils';
 
 export interface TestResult {
   testSuites: {

@@ -1,7 +1,7 @@
 {
-  "name": "@tangro/actions-test",
-  "version": "1.1.6",
-  "private": true,
+  "name": "gh-jester",
+  "version": "1.0.0",
+  "private": false,
   "description": "Run jest tests, add status and checks",
   "main": "lib/main.js",
   "scripts": {
@@ -18,17 +18,17 @@
   "keywords": [
     "actions"
   ],
-  "author": "ankri",
+  "author": "ospfranco",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "1.2.6",
     "@actions/exec": "1.0.4",
-    "@jest/test-result": "26.6.2",
-    "@tangro/tangro-github-toolkit": "1.0.3"
+    "@actions/github": "^4.0.0",
+    "@jest/test-result": "26.6.2"
   },
   "devDependencies": {
     "@types/node": "14.14.10",
-    "@zeit/ncc": "0.22.3",
+    "@vercel/ncc": "0.25.1",
     "ejs": "3.1.5",
     "rimraf": "3.0.2",
     "typescript": "4.1.2"

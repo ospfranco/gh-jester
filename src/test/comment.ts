@@ -1,5 +1,5 @@
 import { TestResult } from './parseTests';
-import { Result } from '@tangro/tangro-github-toolkit';
+import { Result } from '../utils';
 
 export function createCommentText(results: Result<TestResult>) {
   return `\n## test summary

@@ -1,9 +1,5 @@
 import * as core from '@actions/core';
-import {
-  GitHubContext,
-  wrapWithSetStatus,
-  createComment
-} from '@tangro/tangro-github-toolkit';
+import { wrapWithSetStatus, createComment, GitHubContext } from './utils'
 import path from 'path';
 import { createChecksFromTestResults } from './test/checkRun';
 import { runTest } from './test/runTest';

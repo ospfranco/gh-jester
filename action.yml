@@ -1,6 +1,6 @@
-name: 'actions-test'
+name: 'gh-jester'
 description: 'Run jest tests, add status and checks'
-author: 'tangro'
+author: 'ospfranco'
 inputs:
   command:
     description: 'The name of the npm script to call. Default is "test:ci"'
