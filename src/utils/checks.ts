@@ -17,14 +17,16 @@ export async function getCheckRunForAction<E>({
     status: 'in_progress'
   });
 
+  core.info(`ROPO, CHECK RUNS RESPONSE, ${checkRunsResponse}`)
+  core.info(`ROPO, CHECK RUNS RESPONSE, RUNS, ${checkRunsResponse?.data?.check_runs}`)
+
   if (checkRunsResponse?.data?.check_runs?.length === 0) {
     throw new Error(`Could not find check run for action: ${name}`);
   } else {
     const checkRun = checkRunsResponse?.data?.check_runs?.find(run => {
 
-      if(!run.name) {
-        core.info(`HERE is a run with NO NAME: ${run}`)
-      }
+      core.info(`iterating run: ${run}`)
+      
 
       return run.name?.includes('test')
     }
