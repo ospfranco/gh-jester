@@ -55,7 +55,8 @@ async function run() {
       const formattedTestResults = require(pathToTestOutput) as FormattedTestResults;
       const testSummary = parseTests(formattedTestResults);
       core.info('test summary marker 3')
-      
+      const str = JSON.stringify(testSummary, null, 4);
+      core.info(`test summary: ${str}`);
       if (testResults.numFailedTestSuites > 0) {
         core.setFailed('Tests failed. See details.');
       }
@@ -64,7 +65,10 @@ async function run() {
       return testSummary;
     });
 
+    core.info(`post comment ? ${core.getInput('post-comment')}, test summary?, ${testSummary}`);
+
     if (core.getInput('post-comment') === 'true' && testSummary) {
+      core.info('should post comment')
       await createComment({
         context,
         comment: testSummary.text

@@ -20,7 +20,7 @@ export async function getCheckRunForAction<E>({
   const str = JSON.stringify(checkRunsResponse, null, 4);
   core.info(`ROPO, CHECK RUNS RESPONSE, ${str}`);
 
-  if (checkRunsResponse?.data?.check_runs?.length === 0) {
+  if (checkRunsResponse?.data!.check_runs!.length === 0) {
     throw new Error(`Could not find check run for action: ${name}`);
   } else {
     const checkRun = checkRunsResponse?.data?.check_runs?.find(run => {
