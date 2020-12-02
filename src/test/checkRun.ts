@@ -60,9 +60,9 @@ export async function createChecksFromTestResults({
   const formattedTestResults = require(pathToTestOutput) as FormattedTestResults;
 
   console.warn(`createChecksFromTestResults, marker1`);
-  const checkRun = await getCheckRunForAction({
-    context
-  });
+  // const checkRun = await getCheckRunForAction({
+  //   context
+  // });
   console.warn(`createChecksFromTestResults, marker2`);
 
   const testResults = parseTestOutput(formattedTestResults);
@@ -94,12 +94,12 @@ export async function createChecksFromTestResults({
     };
 
     console.warn(`createChecksFromTestResults, marker6`);
-    await updateCheckRun({
-      context,
-      checkRunId: checkRun.id,
-      name: checkRun.name || 'NO_NAME',
-      checks
-    });
+    // await updateCheckRun({
+    //   context,
+    //   checkRunId: checkRun.id,
+    //   name: checkRun.name || 'NO_NAME',
+    //   checks
+    // });
     console.warn(`createChecksFromTestResults, marker7`);
   }
 
