@@ -1,5 +1,6 @@
 import { GitHubContext } from './GithubContext';
 import { github } from './Github';
+import * as core from '@actions/core';
 
 export async function getCheckRunForAction<E>({
   context
@@ -19,8 +20,14 @@ export async function getCheckRunForAction<E>({
   if (checkRunsResponse?.data?.check_runs?.length === 0) {
     throw new Error(`Could not find check run for action: ${name}`);
   } else {
-    const checkRun = checkRunsResponse?.data?.check_runs?.find(run =>
-      run.name.includes('test')
+    const checkRun = checkRunsResponse?.data?.check_runs?.find(run => {
+
+      if(!run.name) {
+        core.info(`HERE is a run with NO NAME: ${run}`)
+      }
+
+      return run.name.includes('test')
+    }
     );
     if (!checkRun) {
       console.log(JSON.stringify(checkRunsResponse.data, null, 2));
