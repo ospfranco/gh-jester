@@ -26,7 +26,7 @@ export async function getCheckRunForAction<E>({
         core.info(`HERE is a run with NO NAME: ${run}`)
       }
 
-      return run.name.includes('test')
+      return run.name?.includes('test')
     }
     );
     if (!checkRun) {
