@@ -30,7 +30,6 @@ async function run() {
 
     const pathToTestOutput = path.join(
       process.env.RUNNER_WORKSPACE as string,
-      repo,
       'test_results.json'
     );
 
