@@ -36,8 +36,6 @@ async function run() {
       )
     )
 
-    core.info(`dir: ${dir}`)
-
     const pathToTestOutput = path.join(
       process.env.RUNNER_WORKSPACE as string,
       repo,
@@ -45,27 +43,20 @@ async function run() {
     );
 
     const testSummary = await wrapWithSetStatus(context, 'test', async () => {
-      core.info('test summary marker 1')
       const testResults = await createChecksFromTestResults({
         pathToTestOutput,
         context
       });
-      core.info('test summary marker 2')
       
       const formattedTestResults = require(pathToTestOutput) as FormattedTestResults;
       const testSummary = parseTests(formattedTestResults);
-      core.info('test summary marker 3')
       const str = JSON.stringify(testSummary, null, 4);
-      core.info(`test summary: ${str}`);
       if (testResults.numFailedTestSuites > 0) {
         core.setFailed('Tests failed. See details.');
       }
-      core.info('test summary marker 4')
       
       return testSummary;
     });
-
-    core.info(`post comment ? ${core.getInput('post-comment')}, test summary?, ${testSummary}`);
 
     if (core.getInput('post-comment') === 'true' && testSummary) {
       core.info('should post comment')
