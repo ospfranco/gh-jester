@@ -11,12 +11,15 @@ export async function createComment<E>({
 }) {
   const [owner, repo] = context.repository.split('/');
   try {
-    await github.repos.createCommitComment({
+    core.info(`trying to post comment: ${comment}, sha: ${context.sha}`);
+    const res = await github.repos.createCommitComment({
       body: comment,
       commit_sha: context.sha,
       owner,
       repo
     });
+
+    core.info(`Tried to post to PR: ${res}`)
   } catch(error) {
     core.info(`could not post comment, ${error}`)
   }
