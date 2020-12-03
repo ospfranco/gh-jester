@@ -9,6 +9,8 @@ You can use a specific `version` of this action. The latest published version is
 # Example job
 
 ```yml
+on: push
+
 test:
   runs-on: ubuntu-latest
   steps:
@@ -51,6 +53,8 @@ test:ci: jest --testLocationInResults --ci --outputFile=test_results.json --json
 It is also possible that the action posts a comment with the result to the commit. You have to set `post-comment` to `true`.
 
 Additionally the test results get written to `./test_result/index.html`. This file can be deployed to a static file server and be linked inside a status.
+
+It is important that your trigger is `push` and not other triggers, since a specific SHA is used to post a comment into the commit
 
 ## Example with a different command
 

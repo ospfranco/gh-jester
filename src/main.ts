@@ -1,42 +1,34 @@
 import * as core from '@actions/core';
-import * as fs from 'fs'
 import { wrapWithSetStatus, createComment, GitHubContext } from './utils'
 import path from 'path';
 import { createChecksFromTestResults } from './test/checkRun';
-import { runTest } from './test/runTest';
+import { executeTests } from './test/runTest';
 import { parseTests } from './test/parseTests';
 import { FormattedTestResults } from '@jest/test-result/build/types';
 
 async function run() {
+  const githubContextString = process.env.GITHUB_CONTEXT ?? '';
+  const githubToken = process.env.GITHUB_TOKEN as string;
+  const runnerWorkspace = process.env.RUNNER_WORKSPACE as string;
+
   try {
-    if (
-      !process.env.GITHUB_CONTEXT ||
-      process.env.GITHUB_CONTEXT.length === 0
-    ) {
-      throw new Error(
-        'You have to set the GITHUB_CONTEXT in your configuration'
-      );
+    if (!githubContextString) {
+      throw new Error('Missing GITHUB_CONTEXT in step config');
     }
 
-    if (!process.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN.length === 0) {
-      throw new Error('You have to set the GITHUB_TOKEN in your configuration');
+    if (!githubToken) {
+      throw new Error('Missing GITHUB_TOKEN in step config');
     }
 
-    const context = JSON.parse(
-      process.env.GITHUB_CONTEXT || ''
-    ) as GitHubContext<{}>;
-
-    core.info(`github context: ${process.env.GITHUB_CONTEXT}`);
-
-    await runTest();
-
-    const [owner, repo] = context.repository.split('/');
-
+    const context = JSON.parse(githubContextString) as GitHubContext<{}>;
+    const [_, repo] = context.repository.split('/');
     const pathToTestOutput = path.join(
-      process.env.RUNNER_WORKSPACE as string,
+      runnerWorkspace,
       repo,
       'test_results.json'
     );
+
+    await executeTests();
 
     const testSummary = await wrapWithSetStatus(context, 'test', async () => {
       const testResults = await createChecksFromTestResults({
