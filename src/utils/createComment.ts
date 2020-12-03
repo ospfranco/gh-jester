@@ -19,7 +19,7 @@ export async function createComment<E>({
       repo
     });
 
-    core.info(`Tried to post to PR: ${res}`)
+    core.info(`Tried to post to PR: ${JSON.stringify(res, null, 4)}`)
   } catch(error) {
     core.info(`could not post comment, ${error}`)
   }
