@@ -31,24 +31,36 @@ export const parseTests = (
     skipped: testResult.numPendingTestSuites,
     total: testResult.numTotalTestSuites
   };
+
   const tests = {
     failed: testResult.numFailedTests,
     passed: testResult.numPassedTests,
     skipped: testResult.numPendingTests,
     total: testResult.numTotalTests
   };
+
   const snapshots = {
     passed: testResult.snapshot.matched,
     failed: testResult.snapshot.total - testResult.snapshot.matched,
     total: testResult.snapshot.total
   };
 
-  const text = `|   | passed | failed | total |
-  ----- | ------ | --- | ---
-  Test Suites | ${testSuites.passed} | ${testSuites.failed} | ${testSuites.total}
-  Tests | ${tests.passed} | ${tests.failed} | ${tests.total}
-  Snapshots | ${snapshots.passed} | ${snapshots.failed} | ${snapshots.total}`;
-  const shortText = `Suites: ${testSuites.passed}/${testSuites.total} Tests: ${tests.passed}/${tests.total} Snapshots: ${snapshots.passed}/${snapshots.total}`;
+  // const text = `|   | passed | failed | total |
+  // ----- | ------ | --- | ---
+  // Test Suites | ${testSuites.passed} | ${testSuites.failed} | ${testSuites.total}
+  // Tests | ${tests.passed} | ${tests.failed} | ${tests.total}
+  // Snapshots | ${snapshots.passed} | ${snapshots.failed} | ${snapshots.total}`;
+
+  // const shortText = `Suites: ${testSuites.passed}/${testSuites.total} Tests: ${tests.passed}/${tests.total} Snapshots: ${snapshots.passed}/${snapshots.total}`;
+
+  const failures: string[] = []
+  testResult.testResults.forEach((suiteResult) => {
+    suiteResult.assertionResults.forEach((assertionResult) => {
+      if(assertionResult.status === 'failed') {
+        failures.push(`❌ ${suiteResult.name} -> ${assertionResult.title}`)
+      }
+    })
+  })
 
   return {
     metadata: {
@@ -57,8 +69,8 @@ export const parseTests = (
       snapshots,
       all: testResult
     },
-    isOkay: testSuites.passed + testSuites.skipped === testSuites.total,
-    shortText,
-    text
+    isOkay: testResult.success,
+    shortText: '',
+    text: `Failing Tests!\n${failures.join('\n')}`
   };
 };

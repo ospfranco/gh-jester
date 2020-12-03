@@ -30,23 +30,20 @@ async function run() {
 
     await executeTests();
 
-    const testSummary = await wrapWithSetStatus(context, 'test', async () => {
-      const testResults = await createChecksFromTestResults({
-        pathToTestOutput,
-        context
-      });
-      
-      const formattedTestResults = require(pathToTestOutput) as FormattedTestResults;
-      const testSummary = parseTests(formattedTestResults);
-
-      if (testResults.numFailedTestSuites > 0) {
-        core.setFailed('Tests failed. See details.');
-      }
-      
-      return testSummary;
+    const testResults = await createChecksFromTestResults({
+      pathToTestOutput,
+      context
     });
 
-    if (core.getInput('post-comment') === 'true' && testSummary) {
+    const formattedTestResults = require(pathToTestOutput) as FormattedTestResults;
+
+    const testSummary = parseTests(formattedTestResults);
+
+    if (testResults.numFailedTestSuites > 0) {
+      core.setFailed('Tests failed. See details.');
+    }
+
+    if (core.getInput('post-comment') === 'true' && !testSummary.isOkay) {
       await createComment({
         context,
         comment: testSummary.text
