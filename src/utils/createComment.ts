@@ -18,8 +18,17 @@ export async function createComment<E>({
       owner,
       repo
     });
-
     core.info(`Tried to post to PR: ${JSON.stringify(res, null, 4)}`)
+    
+    core.info(`trying to post comment2 ${context.head_ref}`);
+    const res2 = await github.repos.createCommitComment({
+      body: comment,
+      commit_sha: context.head_ref,
+      owner,
+      repo,
+    });
+
+    core.info(`Tried to post to PR: ${JSON.stringify(res2, null, 4)}`)
   } catch(error) {
     core.info(`could not post comment, ${error}`)
   }
