@@ -68,11 +68,11 @@ export const parseTests = (
     },
     isOkay: testResult.success,
     shortText: '',
-    text: `## Failing tests!!!
-    
-    ${failures.slice(0, 50).join('\n')}
-    
-    ${failures.length > 50 ? '*Showing only first 20 errors, go check the logs the complete output*' : ''}
-    `
+    text: `### Failing tests!!!
+
+${failures.slice(0, 50).join('\n')}
+
+${failures.length > 50 ? '*Showing only first 20 errors, go check the logs the complete output*' : ''}
+`
   };
 };
