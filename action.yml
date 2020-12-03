@@ -1,6 +1,8 @@
 name: 'gh-jester'
 description: 'Run jest tests, add status and checks'
 author: 'ospfranco'
+icon: 'activity'
+color: 'red'
 inputs:
   command:
     description: 'The name of the npm script to call. Default is "test:ci"'
