@@ -1,6 +1,6 @@
 {
   "name": "gh-jester",
-  "version": "1.0.5",
+  "version": "1.0.13",
   "private": false,
   "description": "Run jest tests, add status and checks",
   "main": "lib/main.js",

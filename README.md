@@ -23,7 +23,7 @@ test:
     - name: Run npm install
       run: npm install
     - name: Run tests
-      uses: ospfranco/gh-jester@v1.0.12
+      uses: ospfranco/gh-jester@v1.0.13
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -60,7 +60,7 @@ It is important that your trigger is `push` and not other triggers, since a spec
 
 ```yml
 - name: Run tests
-  uses: ospfranco/gh-jester@v1.0.12
+  uses: ospfranco/gh-jester@v1.0.13
   with:
     command: 'tests'
   env:
@@ -72,7 +72,7 @@ It is important that your trigger is `push` and not other triggers, since a spec
 
 ```yml
 - name: Run tests
-  uses: ospfranco/gh-jester@v1.0.12
+  uses: ospfranco/gh-jester@v1.0.13
   with:
     post-comment: true
   env:
