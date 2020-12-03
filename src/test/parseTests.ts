@@ -45,22 +45,19 @@ export const parseTests = (
     total: testResult.snapshot.total
   };
 
-  // const text = `|   | passed | failed | total |
-  // ----- | ------ | --- | ---
-  // Test Suites | ${testSuites.passed} | ${testSuites.failed} | ${testSuites.total}
-  // Tests | ${tests.passed} | ${tests.failed} | ${tests.total}
-  // Snapshots | ${snapshots.passed} | ${snapshots.failed} | ${snapshots.total}`;
-
-  // const shortText = `Suites: ${testSuites.passed}/${testSuites.total} Tests: ${tests.passed}/${tests.total} Snapshots: ${snapshots.passed}/${snapshots.total}`;
-
   const failures: string[] = []
   testResult.testResults.forEach((suiteResult) => {
     suiteResult.assertionResults.forEach((assertionResult) => {
       if(assertionResult.status === 'failed') {
-        failures.push(`❌ ${suiteResult.name} -> ${assertionResult.title}`)
+        const runnerWorkspace = process.env.RUNNER_WORKSPACE as string;
+        const suiteName = suiteResult.name.replace(runnerWorkspace, '')
+
+        failures.push(`❌ ${suiteName} -> **${assertionResult.title}**`)
       }
     })
   })
+
+
 
   return {
     metadata: {
@@ -71,6 +68,11 @@ export const parseTests = (
     },
     isOkay: testResult.success,
     shortText: '',
-    text: `Failing Tests!\n${failures.join('\n')}`
+    text: `## Failing tests!!!
+    
+    ${failures.slice(0, 50).join('\n')}
+    
+    ${failures.length > 50 ? '*Showing only first 20 errors, go check the logs the complete output*' : ''}
+    `
   };
 };
