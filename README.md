@@ -4,7 +4,11 @@ Run jest tests, add annotations to failing tests. By default it runs `npm run te
 
 # Versions
 
-You can use a specific `version` of this action. The latest published version is `v1.1.6`. You can also use `latest` to always get the latest version.
+You can use a specific `version` of this action. The latest published version is `v1.0.13`. You can also use `latest` to always get the latest version.
+
+# Posting test results
+
+This action will post a resume of the tests if any of your suites fails, it simply posts the suite path and the name of the failing test and it is meant to provide guidance to which tests could be possibly failing
 
 # Example job
 
