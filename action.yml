@@ -1,7 +1,7 @@
 name: 'gh-jester'
 description: 'Run jest tests, add status and checks'
 author: 'ospfranco'
-icon: 'activity'
+icon-anme: 'activity'
 color: 'red'
 inputs:
   command:
