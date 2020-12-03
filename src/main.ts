@@ -17,6 +17,7 @@ async function run() {
         'You have to set the GITHUB_CONTEXT in your configuration'
       );
     }
+
     if (!process.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN.length === 0) {
       throw new Error('You have to set the GITHUB_TOKEN in your configuration');
     }
@@ -24,6 +25,8 @@ async function run() {
     const context = JSON.parse(
       process.env.GITHUB_CONTEXT || ''
     ) as GitHubContext<{}>;
+
+    core.info(`github context: ${process.env.GITHUB_CONTEXT}`);
 
     await runTest();
 
@@ -59,7 +62,6 @@ async function run() {
     });
 
     if (core.getInput('post-comment') === 'true' && testSummary) {
-      core.info('should post comment')
       await createComment({
         context,
         comment: testSummary.text
