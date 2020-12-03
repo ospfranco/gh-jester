@@ -53,7 +53,7 @@ async function run() {
       
       const formattedTestResults = require(pathToTestOutput) as FormattedTestResults;
       const testSummary = parseTests(formattedTestResults);
-      const str = JSON.stringify(testSummary, null, 4);
+
       if (testResults.numFailedTestSuites > 0) {
         core.setFailed('Tests failed. See details.');
       }
